@@ -119,6 +119,31 @@ theme.cal =
   }
 )
 
+-- MEM
+local memicon = wibox.widget.imagebox(theme.widget_mem)
+local mem = lain.widget.mem({
+    settings = function()
+        widget:set_markup(markup.font(theme.font, " " .. mem_now.used .. "MB "))
+    end
+})
+
+-- CPU
+local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
+local cpu = lain.widget.cpu({
+    settings = function()
+        widget:set_markup(markup.font(theme.font, " " .. cpu_now.usage .. "% "))
+    end
+})
+
+-- Coretemp
+local tempicon = wibox.widget.imagebox(theme.widget_temp)
+local temp = lain.widget.temp({
+    tempfile = "/sys/devices/virtual/thermal/thermal_zone2/temp",
+    settings = function()
+        widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
+    end
+})
+
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
 local bat =
@@ -379,6 +404,15 @@ function theme.at_screen_connect(s)
       layout = wibox.layout.fixed.horizontal,
       wibox.widget.systray(),
       spr,
+      arrl_dl,
+      memicon,
+      mem.widget,
+      arrl_ld,
+      wibox.container.background(cpuicon, theme.bg_focus),
+      wibox.container.background(cpu.widget, theme.bg_focus),
+      arrl_dl,
+      tempicon,
+      temp.widget,
       arrl_ld,
       -- wibox.container.background(mpdicon, theme.bg_focus),
       -- wibox.container.background(theme.mpd.widget, theme.bg_focus),
@@ -387,19 +421,10 @@ function theme.at_screen_connect(s)
       wibox.container.background(theme.volume.widget, theme.bg_focus),
       -- arrl_ld,
       -- wibox.container.background(mailicon, theme.bg_focus),
-      --wibox.container.background(theme.mail.widget, theme.bg_focus),
+      -- wibox.container.background(theme.mail.widget, theme.bg_focus),
       -- arrl_dl,
-      -- memicon,
-      -- mem.widget,
-      -- arrl_ld,
-      -- wibox.container.background(cpuicon, theme.bg_focus),
-      -- wibox.container.background(cpu.widget, theme.bg_focus),
-      -- arrl_dl,
-      -- tempicon,
-      -- temp.widget,
-      -- arrl_ld,
       -- wibox.container.background(fsicon, theme.bg_focus),
-      --wibox.container.background(theme.fs.widget, theme.bg_focus),
+      -- wibox.container.background(theme.fs.widget, theme.bg_focus),
       arrl_dl,
       wifi_icon,
       net.widget,
